@@ -1,0 +1,31 @@
+{
+  "name": "powerhubshop",
+  "version": "1.0.1",
+  "description": "E-Commerce application built with MERN stack",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "node backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AravindMurgan/PowerHubShop.git"
+  },
+  "author": "Aravind M",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AravindMurgan/PowerHubShop/issues"
+  },
+  "homepage": "https://github.com/AravindMurgan/PowerHubShop#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.2"
+  }
+}
