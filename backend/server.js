@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv'
 dotenv.config();
-import products from './data/products.js';
 import connectDb from './config/db.js';
+import productRoutes from './routes/productRoutes.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 const port = process.env.PORT || 5000;
 
 connectDb();
@@ -10,17 +11,14 @@ connectDb();
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
+// app.get('/', (req, res) => {
+//     res.send('Hello World');
+// })
 
-app.get('/api/products', (req, res) => {
-    res.json(products);
-})
+app.use('/api/products', productRoutes);
 
-app.get('/api/products/:id', (req, res) => {
-    const product = products.find((product) => product._id === req.params.id);
-    res.json(product);
-})
+app.use(notFound);
+app.use(errorHandler);
 
+console.log('test clg');
 app.listen(port, () => { console.log(`Server is running on port ${port}`) });
