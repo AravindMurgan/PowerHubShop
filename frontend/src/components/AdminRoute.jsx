@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const AdminROute = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
-  
+    
     return userInfo && userInfo.isAdmin ? <Outlet /> : <Navigate to="/login" replace />;
 }
 

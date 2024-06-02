@@ -22,9 +22,7 @@ const LoginScreen = () => {
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  console.log('sp', sp);
   const redirect = sp.get('redirect') || '/';
-  console.log('redirect', redirect);
 
   useEffect(() => {
     if (userInfo) {

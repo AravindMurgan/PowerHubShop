@@ -15,7 +15,6 @@ const PlaceOrderScreen = () => {
     const dispatch = useDispatch();
 
     const cart = useSelector((state)=>state.cart);
-    console.log(cart);
     // const {shippingAddress,paymentMethod} = cart;
 
     const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
@@ -44,7 +43,6 @@ const PlaceOrderScreen = () => {
             }).unwrap();
             dispatch(clearCartItems());
             navigate(`/order/${res._id}`);
-            toast.success('Order Placed Successfully');
         } catch (error) {
             toast.error(error);
         }
@@ -127,7 +125,8 @@ const PlaceOrderScreen = () => {
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            {isError && <Message variant='danger'>{isError}</Message>}
+                            {isError && 
+                            <Message variant='danger'>{isError.data.message}</Message>}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Button type='button' className='btn-block' disabled={cart.cartItems.length === 0}

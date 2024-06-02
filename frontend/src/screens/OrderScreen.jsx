@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Card, Form, Button } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetOrderDetailsQuery, useGetPayPalClientIdQuery, usePayOrderMutation } from '../slices/ordersApiSlice';
-import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { useDeliverOrderMutation, useGetOrderDetailsQuery, useGetPayPalClientIdQuery, usePayOrderMutation } from '../slices/ordersApiSlice';
+import {  PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import {toast} from 'react-toastify';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,12 +13,9 @@ import { useSelector } from 'react-redux';
 const OrderScreen = () => {
 
   const { orderId } = useParams();
-  // debugger;
-
-  console.log('ordrID::::', orderId);
 
   const { data: order, refetch, isError, isLoading } = useGetOrderDetailsQuery(orderId);
-  console.log('eror:::',isError)
+  const [deliverOrder, {isLoading:loadingDeliver}]=useDeliverOrderMutation();
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -53,6 +50,7 @@ const OrderScreen = () => {
 
   }, [order, payPalDispatch, paypal, loadingPayPal, errorPayPal]);
 
+
   const onApproveTest=async()=>{
     try {
       await payOrder({orderId,details:{payer:{}}});
@@ -66,7 +64,7 @@ const OrderScreen = () => {
   const onApprove=(data,actions)=>{
     return actions.order.capture().then(async function(details){
       try {
-        await payOrder({orderId,details});
+        await payOrder({orderId,details}).unwrap();
         refetch();
         toast.success('Order Paid Successfully');
       } catch (error) {
@@ -93,9 +91,22 @@ const OrderScreen = () => {
     })
   }
 
-  // const {userInfo}= useSelector(state=>state.userLogin);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const deliverHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success('Order Delivered Successfully');
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  }
+
   return (
-    isLoading ? <Loader /> : isError ? <Message variant='danger'>{isError}</Message> :
+    isLoading ? <Loader /> : isError ? <Message variant='danger'>{
+      isError?.data?.message || isError.message
+    }</Message> :
       (
         <>
           <h1>Order {order._id}</h1>
@@ -232,7 +243,7 @@ const OrderScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  {/* {loadingDeliver && <Loader />}
+                 {loadingDeliver && <Loader />}
 
                   {userInfo &&
                     userInfo.isAdmin &&
@@ -247,7 +258,7 @@ const OrderScreen = () => {
                           Mark As Delivered
                         </Button>
                       </ListGroup.Item>
-                    )} */}
+                    )}
                 </ListGroup>
               </Card>
             </Col>

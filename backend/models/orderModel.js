@@ -80,6 +80,4 @@ const orderSchema = mongoose.Schema(
 
 const Order = mongoose.model('Order', orderSchema);
 
-// console.log(Order, 'Orders'.green.inverse);
-
 export default Order;

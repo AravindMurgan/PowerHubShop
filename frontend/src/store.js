@@ -10,7 +10,6 @@ const store = configureStore({
         auth:authSliceReducer,
     },
     middleware:(getDefaultMiddleware)=>{
-        console.log('middlewareCallBackFunc:::',getDefaultMiddleware());
         return getDefaultMiddleware().concat(apiSlice.middleware)},
     devTools:true
 });
