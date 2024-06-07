@@ -16,7 +16,13 @@ const app = express();
 connectDb();
 
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://power-hub-shop-39ez.vercel.app', // Replace with your frontend domain
+  credentials: true, // Allow credentials (cookies) to be sent
+};
+
+
+app.use(cors(corsOptions));
 
 
 app.use(express.json());
