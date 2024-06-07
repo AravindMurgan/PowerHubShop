@@ -15,10 +15,10 @@ const port = process.env.PORT || 5000;
 connectDb();
 
 
-app.use(cors({
-  origin: "https://power-hub-shop-backend.vercel.app",
-  credentials: true
-}));
+// app.use(cors({
+//   origin: "https://power-hub-shop-backend.vercel.app",
+//   credentials: true
+// }));
 
 const app = express();
 app.use(express.json());
