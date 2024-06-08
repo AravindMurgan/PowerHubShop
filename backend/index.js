@@ -15,14 +15,15 @@ const app = express();
 
 connectDb();
 
+// Define your allowed origins and CORS options
+const corsOptions = {
+  origin: 'https://power-hub-shop-39ez.vercel.app', // Replace with your actual front-end origin
+  credentials: true, // Allow credentials (cookies, HTTP authentication)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers if needed
+};
 
-// const corsOptions = {
-//   origin: 'https://power-hub-shop-39ez.vercel.app', // Replace with your frontend domain
-//   credentials: true, // Allow credentials (cookies) to be sent
-// };
-
-
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 app.use(express.json());
