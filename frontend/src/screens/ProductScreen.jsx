@@ -66,8 +66,8 @@ const ProductScreen = () => {
                     <>
                     <Meta title={product.name} />
                     <Row>
-                        <Col md={5}>
-                            <Image src={product.image} alt={product.name} fluid />
+                        <Col md={5} className="text-center">
+                            <Image src={product.image} alt={product.name} fluid  style={{ maxWidth: '80%', margin: '0 auto' }}  />
                         </Col>
 
                         <Col md={4}>
@@ -94,7 +94,7 @@ const ProductScreen = () => {
                                         <Row>
                                             <Col>Price:</Col>
                                             <Col>
-                                                <strong>${product.price}</strong>
+                                                <strong>£{product.price}</strong>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
