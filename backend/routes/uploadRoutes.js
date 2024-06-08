@@ -4,6 +4,7 @@ import multer from 'multer';
 
 const router = express.Router();
 
+//multer configuration
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, 'frontend/public/uploads');

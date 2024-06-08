@@ -55,6 +55,7 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
     );
   } else {
+    //static folder should be pointing to public in order for vercel to access images
     app.use('/uploads', express.static(path.join(__dirname, '/frontend/public/uploads')));
     app.get('/', (req, res) => {
       res.send('API is running....');
